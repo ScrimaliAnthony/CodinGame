@@ -14,7 +14,10 @@
 <br>
 
 # Combat de bot (IA)
-| Nom du Puzzle | Langage | Ligue | Classement |
+| Nom du Puzzle | Langage | Ligue |
+|---------------|---------|-------|
+| [Mad Pod Racing](https://www.codingame.com/multiplayer/bot-programming/mad-pod-racing) | [JavaScript]() | Argent |
+| [Code Royale](https://www.codingame.com/multiplayer/bot-programming/code-royale) | [Python3]() | Bronze |
 
 <br>
 
