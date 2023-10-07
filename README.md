@@ -22,4 +22,6 @@
 <br>
 
 # Optimisation
-| Nom du Puzzle | Langage | Progression | Classement |
+| Nom du Puzzle | Langage | Progression |
+|---------------|---------|-------------|
+| [Code vs Zombies](https://www.codingame.com/multiplayer/optimization/code-vs-zombies) | [Python3]() | 95% |
