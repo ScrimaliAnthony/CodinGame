@@ -1,4 +1,4 @@
-var inputs = readline().split(' ');
+var inputs = readline().split(' '); 
 const lightX = parseInt(inputs[0]); // the X position of the light of power
 const lightY = parseInt(inputs[1]); // the Y position of the light of power
 const initialTx = parseInt(inputs[2]); // Thor's starting X position
