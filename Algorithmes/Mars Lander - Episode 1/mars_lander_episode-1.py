@@ -14,5 +14,5 @@ while True:
         a = 3
     if v_speed <= -40 and y < 1500:
         a = 4
-    
+
     print("0" , a)
