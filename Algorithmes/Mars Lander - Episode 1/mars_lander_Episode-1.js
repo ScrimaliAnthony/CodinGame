@@ -1,4 +1,4 @@
-const surfaceN = parseInt(readline()); // the number of points used to draw the surface of Mars.
+const surfaceN = parseInt(readline()); // the number of points used to draw the surface of Mars. 
 for (let i = 0; i < surfaceN; i++) {
     var inputs = readline().split(' ');
     const landX = parseInt(inputs[0]); // X coordinate of a surface point. (0 to 6999)
