@@ -5,7 +5,7 @@
 # Algorithmes
 | Nom du Puzzle                                                                         | Langage             | Progression |
 |---------------------------------------------------------------------------------------|---------------------|-------------|
-| [Mars Lander - Episode 1](https://www.codingame.com/training/easy/mars-lander-episode-1) | [Python3](https://github.com/ScrimaliAnthony/CodinGame/blob/main/Mars%20Lander%20-%20Episode%201/mars_lander_episode-1.py), [JavaScript](https://github.com/ScrimaliAnthony/CodinGame/blob/main/Mars%20Lander%20-%20Episode%201/mars_lander_Episode-1.js) |    100%     |
+| [Mars Lander - Episode 1](https://www.codingame.com/training/easy/mars-lander-episode-1) | [Python3](https://github.com/ScrimaliAnthony/CodinGame/blob/main/Algorithmes/Mars%20Lander%20-%20Episode%201/mars_lander_episode-1.py), [JavaScript](https://github.com/ScrimaliAnthony/CodinGame/blob/main/Algorithmes/Don't%20Panic%20-%20Episode%201/dont_panic_episode-1.py) |    100%     |
 | [Power of Thor - Episode 1](https://www.codingame.com/training/easy/power-of-thor-episode-1) | [Python3](https://github.com/ScrimaliAnthony/CodinGame/blob/main/Algorithmes/Power%20of%20Thor%20-%20Episode%201/power_of_thor_episode-1.py), [JavaScript](https://github.com/ScrimaliAnthony/CodinGame/blob/main/Algorithmes/Power%20of%20Thor%20-%20Episode%201/power_of_thor_episode-1.js) |    100%     |
 | [Températures](https://www.codingame.com/training/easy/temperatures) | [Python3](https://github.com/ScrimaliAnthony/CodinGame/blob/main/Algorithmes/Temperatures/temperature.py) |    100%     |
 | [La Descente](https://www.codingame.com/training/easy/the-descent) | [Python3](https://github.com/ScrimaliAnthony/CodinGame/blob/main/Algorithmes/La%20Descente/la_descente.py) |    100%     |
@@ -16,12 +16,12 @@
 # Combat de bot (IA)
 | Nom du Puzzle | Langage | Ligue |
 |---------------|---------|-------|
-| [Mad Pod Racing](https://www.codingame.com/multiplayer/bot-programming/mad-pod-racing) | [JavaScript]() | Argent |
-| [Code Royale](https://www.codingame.com/multiplayer/bot-programming/code-royale) | [Python3]() | Bronze |
+| [Mad Pod Racing](https://www.codingame.com/multiplayer/bot-programming/mad-pod-racing) | [JavaScript](https://github.com/ScrimaliAnthony/CodinGame/blob/main/Combat%20de%20bot/Mad%20Pod%20Racing/mad_pod_racing.js) | Argent |
+| [Code Royale](https://www.codingame.com/multiplayer/bot-programming/code-royale) | [Python3](https://github.com/ScrimaliAnthony/CodinGame/blob/main/Combat%20de%20bot/Code%20Royale/code_royale.py) | Bronze |
 
 <br>
 
 # Optimisation
 | Nom du Puzzle | Langage | Progression |
 |---------------|---------|-------------|
-| [Code vs Zombies](https://www.codingame.com/multiplayer/optimization/code-vs-zombies) | [Python3]() | 95% |
+| [Code vs Zombies](https://www.codingame.com/multiplayer/optimization/code-vs-zombies) | [Python3](https://github.com/ScrimaliAnthony/CodinGame/blob/main/Optimisation/Code%20vs%20Zombies/code_vs_zombies.py) | 95% |
