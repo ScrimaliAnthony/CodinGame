@@ -21,5 +21,5 @@ while True:
     elif initial_tx < light_x:
         initial_tx -= 1
         d += "E"
-    
+
     print(d)
