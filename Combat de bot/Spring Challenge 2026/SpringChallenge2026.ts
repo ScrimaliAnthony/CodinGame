@@ -32,6 +32,26 @@ class Troll {
     }
 }
 
+class Tree {
+    type: string;
+    x: number;
+    y: number;
+    size: number;
+    health: number;
+    fruits: number;
+    cooldown: number;
+
+    constructor(type: string, x: number, y: number, size: number, health: number, fruits: number, cooldown: number) {
+        this.type = type;
+        this.x = x;
+        this.y = y;
+        this.size = size;
+        this.health = health;
+        this.fruits = fruits;
+        this.cooldown = cooldown;
+    }
+}
+
 var inputs: string[] = readline().split(' ');
 const width: number = parseInt(inputs[0]);
 const height: number = parseInt(inputs[1]);
@@ -41,6 +61,7 @@ for (let i = 0; i < height; i++) {
 
 while (true) {
     const trolls: Troll[] = [];
+    const trees: Tree[] = [];
     for (let i = 0; i < 2; i++) {
         var inputs: string[] = readline().split(' ');
         const plum: number = parseInt(inputs[0]);
@@ -60,6 +81,7 @@ while (true) {
         const health: number = parseInt(inputs[4]);
         const fruits: number = parseInt(inputs[5]);
         const cooldown: number = parseInt(inputs[6]);
+        trees.push(new Tree(type, x, y, size, health, fruits, cooldown));
     }
     const trollsCount: number = parseInt(readline());
     for (let i = 0; i < trollsCount; i++) {
@@ -82,6 +104,7 @@ while (true) {
     }
 
     console.error('trolls', trolls);
+    console.error('trees', trees);
 
     console.log('MOVE 0 7 7');
 }
