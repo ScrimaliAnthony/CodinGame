@@ -50,32 +50,12 @@ class Troll {
         }
     }
 
-    public getCarryCapacity(): number {
-        return this.carryCapacity;
-    }
-
-    public getCarryPlum(): number {
-        return this.carryPlum;
-    }
-
-    public getCarryLemon(): number {
-        return this.carryLemon;
-    }
-
-    public getCarryApple(): number {
-        return this.carryApple;
-    }
-
-    public getCarryBanana(): number {
-        return this.carryBanana;
-    }
-
-    public getCarryIron(): number {
-        return this.carryIron;
-    }
-
-    public getCarryWood(): number {
-        return this.carryWood;
+    public isTrollCanStillCarry(): boolean {
+        let isTrollCanCarry: boolean = true;
+        if (this.carryCapacity === this.carryPlum || this.carryCapacity === this.carryLemon || this.carryCapacity === this.carryApple || this.carryCapacity === this.carryBanana || this.carryCapacity === this.carryIron || this.carryCapacity === this.carryWood) {
+            isTrollCanCarry = false;
+        }
+        return isTrollCanCarry;
     }
 
     public nextMove(action: string, x: number, y: number): string {
@@ -141,12 +121,47 @@ type Position = {
     y: number;
 }
 
+class GameMap {
+    width: number;
+    height: number;
+    line: string[][];
+
+    constructor(width: number, height: number, line: string[][]) {
+        this.width = width;
+        this.height = height;
+        this.line = line;
+    }
+
+    public getLine(): string[][] {
+        return this.line;
+    }
+
+    public getMyShack(): Position {
+        let searching: string = '0';
+        let i: number = 0;
+        let index: number = -1;
+        while (index === -1) {
+            index = this.line[i].indexOf(searching);
+            i++;
+        }
+        i--;
+        return {
+            x: index,
+            y: i
+        }
+    }
+}
+
+const lineArray: string[][] = [];
 var inputs: string[] = readline().split(' ');
 const width: number = parseInt(inputs[0]);
 const height: number = parseInt(inputs[1]);
 for (let i = 0; i < height; i++) {
     const line: string = readline();
+    lineArray.push(line.split(""));;
 }
+
+const gameMap = new GameMap(width, height, lineArray);
 
 while (true) {
     const trolls: Troll[] = [];
@@ -201,6 +216,8 @@ while (true) {
     const nextAction: string = findNextAction(myTrolls, betterPosition);
     const NextMove: string = myTrolls[0].nextMove(nextAction, betterPosition.x, betterPosition.y);
 
+    console.error(gameMap.getMyShack());
+
     console.log(NextMove);
 }
 
@@ -209,9 +226,12 @@ function findNextAction(myTrolls: Troll[], betterPosition: Position): string {
     for (const troll of myTrolls) {
         const trollPosition: Position = troll.getPosition();
     
-        if (betterPosition.x === trollPosition.x && betterPosition.y === trollPosition.y) {
+        if ((betterPosition.x === trollPosition.x && betterPosition.y === trollPosition.y) && troll.isTrollCanStillCarry()) {
             nextAction = "HARVEST";
-        } else {
+        } else if ((betterPosition.x === trollPosition.x && betterPosition.y === trollPosition.y) && !troll.isTrollCanStillCarry()) {
+            nextAction = "MOVE";
+        }
+        else {
             nextAction = "MOVE";
         }
     }
@@ -245,4 +265,4 @@ function findBetterTreePosition(myTrolls: Troll[], treesWithFruits: Tree[]) {
 
 function computeDistanceTrollTree(trollPosition: Position, treePosition: Position): number {
     return Math.abs((trollPosition.x - treePosition.x)) + Math.abs((trollPosition.y - treePosition.y));
-} 
+}
