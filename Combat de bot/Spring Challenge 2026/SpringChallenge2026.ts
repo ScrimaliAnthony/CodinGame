@@ -30,6 +30,11 @@ class Troll {
         this.carryIron = carryIron;
         this.carryWood = carryWood;
     }
+
+    public getPlayer(): number {
+        return this.player;
+    }
+
 }
 
 class Tree {
@@ -61,7 +66,9 @@ for (let i = 0; i < height; i++) {
 
 while (true) {
     const trolls: Troll[] = [];
+    const myTroll: Troll[] = trolls.filter(troll => troll.getPlayer() === 0);
     const trees: Tree[] = [];
+
     for (let i = 0; i < 2; i++) {
         var inputs: string[] = readline().split(' ');
         const plum: number = parseInt(inputs[0]);
@@ -102,9 +109,9 @@ while (true) {
         const carryWood: number = parseInt(inputs[13]);
         trolls.push(new Troll(id, player, x, y, movementSpeed, carryCapacity, harvestPower, chopPower, carryPlum, carryLemon, carryApple, carryBanana, carryIron, carryWood));
     }
-
-    console.error('trolls', trolls);
+    
     console.error('trees', trees);
+    console.error('myTroll', myTroll);
 
     console.log('MOVE 0 7 7');
 }
