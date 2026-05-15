@@ -34,6 +34,63 @@ class Troll {
     public getPlayer(): number {
         return this.player;
     }
+
+    public getX(): number {
+        return this.x;
+    }
+
+    public getY(): number {
+        return this.y;
+    }
+
+    public getPosition(): Position {
+        return {
+            x: this.x,
+            y: this.y
+        }
+    }
+
+    public getCarryCapacity(): number {
+        return this.carryCapacity;
+    }
+
+    public getCarryPlum(): number {
+        return this.carryPlum;
+    }
+
+    public getCarryLemon(): number {
+        return this.carryLemon;
+    }
+
+    public getCarryApple(): number {
+        return this.carryApple;
+    }
+
+    public getCarryBanana(): number {
+        return this.carryBanana;
+    }
+
+    public getCarryIron(): number {
+        return this.carryIron;
+    }
+
+    public getCarryWood(): number {
+        return this.carryWood;
+    }
+
+    public nextMove(action: string, x: number, y: number): string {
+        let actionToReturn: string = "";
+        switch (action) {
+            case "MOVE":
+                actionToReturn = action + " " + this.id + " " + x + " " + y;
+                break;
+            case "HARVEST":
+                actionToReturn = action + " " + this.id;
+                break;
+        }
+        
+        return actionToReturn;
+    }
 }
 
 class Tree {
@@ -62,6 +119,26 @@ class Tree {
             return false;
         }
     }
+
+    public getX(): number {
+        return this.x;
+    }
+
+    public getY(): number {
+        return this.y;
+    }
+
+    public getPosition(): Position {
+        return {
+            x: this.x,
+            y: this.y
+        }
+    }
+}
+
+type Position = {
+    x: number;
+    y: number;
 }
 
 var inputs: string[] = readline().split(' ');
@@ -116,16 +193,56 @@ while (true) {
         trolls.push(new Troll(id, player, x, y, movementSpeed, carryCapacity, harvestPower, chopPower, carryPlum, carryLemon, carryApple, carryBanana, carryIron, carryWood));
     }
 
-    const myTroll: Troll[] = trolls.filter(troll => troll.getPlayer() === 0);
+    const myTrolls: Troll[] = trolls.filter(troll => troll.getPlayer() === 0);
     const treesWithFruits: Tree[] = trees.filter(tree => tree.isTreeHaveFruit());
 
-    console.error('treesWithFruits', treesWithFruits);
-    console.error('myTroll', myTroll);
+    let betterPosition: Position = findBetterTreePosition(myTrolls, treesWithFruits);
 
-    console.log('MOVE 0 7 7');
+    const nextAction: string = findNextAction(myTrolls, betterPosition);
+    const NextMove: string = myTrolls[0].nextMove(nextAction, betterPosition.x, betterPosition.y);
+
+    console.log(NextMove);
 }
 
-    // valid actions:
-    // MOVE <id> <x> <y>
-    // HARVEST <id> - when you are on the same cell as a tree
-    // DROP <id> - when you are next to your shack and carry items
+function findNextAction(myTrolls: Troll[], betterPosition: Position): string {
+    let nextAction: string = "";
+    for (const troll of myTrolls) {
+        const trollPosition: Position = troll.getPosition();
+    
+        if (betterPosition.x === trollPosition.x && betterPosition.y === trollPosition.y) {
+            nextAction = "HARVEST";
+        } else {
+            nextAction = "MOVE";
+        }
+    }
+
+    return nextAction;
+}
+
+function findBetterTreePosition(myTrolls: Troll[], treesWithFruits: Tree[]) {
+    let betterRatio: number = Infinity;
+    let betterPosition = {
+        x: 0,
+        y: 0
+    }
+
+    for (const troll of myTrolls) {
+        const trollPosition: Position = troll.getPosition();
+        
+        for (const treeWithFruits of treesWithFruits) {
+            const treePosition: Position = treeWithFruits.getPosition();
+            
+            const DistanceTrollTree: number = computeDistanceTrollTree(trollPosition, treePosition)
+            
+            if (DistanceTrollTree < betterRatio) {
+                betterRatio = Math.abs((trollPosition.x - treePosition.x)) + Math.abs((trollPosition.y - treePosition.y));
+                betterPosition = treePosition;
+            }
+        }
+    }
+    return betterPosition;
+}
+
+function computeDistanceTrollTree(trollPosition: Position, treePosition: Position): number {
+    return Math.abs((trollPosition.x - treePosition.x)) + Math.abs((trollPosition.y - treePosition.y));
+} 
