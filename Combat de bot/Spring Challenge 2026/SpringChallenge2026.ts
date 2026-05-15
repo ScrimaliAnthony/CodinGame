@@ -57,14 +57,20 @@ class Troll {
         }
         return isTrollCanCarry;
     }
-
-    public nextMove(action: string, x: number, y: number): string {
+    
+    public nextMove(action: string, betterTreePositionX: number, betterTreePositionY: number, shackPositionX: number, shackPositionY: number): string {
         let actionToReturn: string = "";
         switch (action) {
-            case "MOVE":
-                actionToReturn = action + " " + this.id + " " + x + " " + y;
+            case "MOVETOTREE":
+                actionToReturn = "MOVE" + " " + this.id + " " + betterTreePositionX + " " + betterTreePositionY;
                 break;
             case "HARVEST":
+                actionToReturn = action + " " + this.id;
+                break;
+            case "MOVETOSHACK":
+                actionToReturn = "MOVE" + " " + this.id + " " + shackPositionX + " " + shackPositionY;
+                break;
+            case "DROP":
                 actionToReturn = action + " " + this.id;
                 break;
         }
@@ -210,29 +216,38 @@ while (true) {
 
     const myTrolls: Troll[] = trolls.filter(troll => troll.getPlayer() === 0);
     const treesWithFruits: Tree[] = trees.filter(tree => tree.isTreeHaveFruit());
+    const shackPosition: Position = gameMap.getMyShack();
 
-    let betterPosition: Position = findBetterTreePosition(myTrolls, treesWithFruits);
+    let betterTreePosition: Position = findBetterTreePosition(myTrolls, treesWithFruits);
 
-    const nextAction: string = findNextAction(myTrolls, betterPosition);
-    const NextMove: string = myTrolls[0].nextMove(nextAction, betterPosition.x, betterPosition.y);
+    const nextAction: string = findNextAction(myTrolls, betterTreePosition, shackPosition);
+    const NextMove: string = myTrolls[0].nextMove(nextAction, betterTreePosition.x, betterTreePosition.y, shackPosition.x, shackPosition.y);
 
-    console.error(gameMap.getMyShack());
 
     console.log(NextMove);
 }
 
-function findNextAction(myTrolls: Troll[], betterPosition: Position): string {
+function findNextAction(myTrolls: Troll[], betterTreePosition: Position, shackPosition: Position): string {
     let nextAction: string = "";
     for (const troll of myTrolls) {
         const trollPosition: Position = troll.getPosition();
-    
-        if ((betterPosition.x === trollPosition.x && betterPosition.y === trollPosition.y) && troll.isTrollCanStillCarry()) {
-            nextAction = "HARVEST";
-        } else if ((betterPosition.x === trollPosition.x && betterPosition.y === trollPosition.y) && !troll.isTrollCanStillCarry()) {
-            nextAction = "MOVE";
-        }
-        else {
-            nextAction = "MOVE";
+
+        if (troll.isTrollCanStillCarry()) {
+            if ((betterTreePosition.x === trollPosition.x && betterTreePosition.y === trollPosition.y)) {
+                // Ne possède pas assez de ressource, est près d'un arbre avec des fruits, doit récolté
+                nextAction = "HARVEST";
+            } else {
+                // Ne possède pas assez de ressource, n'est pas près d'un arbre avec des fruits, doit rejoindre l'arbre avec des fruits le plus proche
+                nextAction = "MOVETOTREE";
+            }
+        } else {
+            if ((shackPosition.x === (trollPosition.x - 1) && shackPosition.y === trollPosition.y) || (shackPosition.x === (trollPosition.x + 1) && shackPosition.y === trollPosition.y) || (shackPosition.x === trollPosition.x && (shackPosition.y === trollPosition.y - 1)) || (shackPosition.x === trollPosition.x && (shackPosition.y === trollPosition.y + 1))) {
+                // possède assez de ressource, est près du shack, doit déposer les fruits
+                nextAction = "DROP"
+            } else {
+                // possède assez de ressource, doit rejoindre le Shack
+                nextAction = "MOVETOSHACK";
+            }
         }
     }
 
@@ -241,7 +256,7 @@ function findNextAction(myTrolls: Troll[], betterPosition: Position): string {
 
 function findBetterTreePosition(myTrolls: Troll[], treesWithFruits: Tree[]) {
     let betterRatio: number = Infinity;
-    let betterPosition = {
+    let betterTreePosition = {
         x: 0,
         y: 0
     }
@@ -256,11 +271,11 @@ function findBetterTreePosition(myTrolls: Troll[], treesWithFruits: Tree[]) {
             
             if (DistanceTrollTree < betterRatio) {
                 betterRatio = Math.abs((trollPosition.x - treePosition.x)) + Math.abs((trollPosition.y - treePosition.y));
-                betterPosition = treePosition;
+                betterTreePosition = treePosition;
             }
         }
     }
-    return betterPosition;
+    return betterTreePosition;
 }
 
 function computeDistanceTrollTree(trollPosition: Position, treePosition: Position): number {
