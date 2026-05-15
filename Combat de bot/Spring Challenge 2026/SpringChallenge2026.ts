@@ -34,7 +34,6 @@ class Troll {
     public getPlayer(): number {
         return this.player;
     }
-
 }
 
 class Tree {
@@ -55,6 +54,14 @@ class Tree {
         this.fruits = fruits;
         this.cooldown = cooldown;
     }
+
+    public isTreeHaveFruit() : boolean {
+        if (this.fruits > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 
 var inputs: string[] = readline().split(' ');
@@ -66,7 +73,6 @@ for (let i = 0; i < height; i++) {
 
 while (true) {
     const trolls: Troll[] = [];
-    const myTroll: Troll[] = trolls.filter(troll => troll.getPlayer() === 0);
     const trees: Tree[] = [];
 
     for (let i = 0; i < 2; i++) {
@@ -109,8 +115,11 @@ while (true) {
         const carryWood: number = parseInt(inputs[13]);
         trolls.push(new Troll(id, player, x, y, movementSpeed, carryCapacity, harvestPower, chopPower, carryPlum, carryLemon, carryApple, carryBanana, carryIron, carryWood));
     }
-    
-    console.error('trees', trees);
+
+    const myTroll: Troll[] = trolls.filter(troll => troll.getPlayer() === 0);
+    const treesWithFruits: Tree[] = trees.filter(tree => tree.isTreeHaveFruit());
+
+    console.error('treesWithFruits', treesWithFruits);
     console.error('myTroll', myTroll);
 
     console.log('MOVE 0 7 7');
