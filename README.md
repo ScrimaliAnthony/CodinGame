@@ -52,7 +52,7 @@ Les contributions sont les bienvenues ! Si vous trouvez une meilleure solution o
 |---------------|---------|-------|
 | [Mad Pod Racing](https://www.codingame.com/multiplayer/bot-programming/mad-pod-racing) | [JavaScript](https://github.com/ScrimaliAnthony/CodinGame/blob/main/Combat%20de%20bot/Mad%20Pod%20Racing/mad_pod_racing.js) | Argent |
 | [Code Royale](https://www.codingame.com/multiplayer/bot-programming/code-royale) | [Python3](https://github.com/ScrimaliAnthony/CodinGame/blob/main/Combat%20de%20bot/Code%20Royale/code_royale.py) | Bronze |
-| [Spring Challenge 2026](https://www.codingame.com/contests/spring-challenge-2026-troll-farm) | [TypeScript](hhttps://github.com/ScrimaliAnthony/CodinGame/blob/main/Combat%20de%20bot/Spring%20Challenge%202026/SpringChallenge2026.ts) | Wood 2 |
+| [Spring Challenge 2026](https://www.codingame.com/contests/spring-challenge-2026-troll-farm) | [TypeScript](https://github.com/ScrimaliAnthony/CodinGame/blob/main/Combat%20de%20bot/Spring%20Challenge%202026/SpringChallenge2026.ts) | Wood 2 |
 
 # Optimisation
 | Nom du Puzzle | Langage | Progression |
