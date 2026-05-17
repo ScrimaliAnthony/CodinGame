@@ -31,31 +31,11 @@ class Troll {
         this.carryWood = carryWood;
     }
 
-    public getPlayer(): number {
-        return this.player;
-    }
-
-    public getX(): number {
-        return this.x;
-    }
-
-    public getY(): number {
-        return this.y;
-    }
-
     public getPosition(): Position {
         return {
             x: this.x,
             y: this.y
         }
-    }
-
-    public getcarryCapacity(): number {
-        return this.carryCapacity;
-    }
-
-    public getCarryLemon(): number {
-        return this.carryLemon;
     }
 
     public isTrollCanStillCarry(): boolean {
@@ -95,14 +75,6 @@ class Tree {
         }
     }
 
-    public getX(): number {
-        return this.x;
-    }
-
-    public getY(): number {
-        return this.y;
-    }
-
     public getPosition(): Position {
         return {
             x: this.x,
@@ -120,10 +92,6 @@ class GameMap {
         this.width = width;
         this.height = height;
         this.line = line;
-    }
-    
-    public getLine(): string[][] {
-        return this.line;
     }
     
     public getMyShack(): Position {
@@ -184,7 +152,7 @@ while (true) {
 
     initial(trolls, trees, pantry)
 
-    const myTrolls: Troll[] = trolls.filter(troll => troll.getPlayer() === 0);
+    const myTrolls: Troll[] = trolls.filter(troll => troll.player === 0);
     let treesWithFruits: Tree[] = trees.filter(tree => tree.isTreeHaveFruit());
 
     const trollsAction: string[] = [];
@@ -194,7 +162,6 @@ while (true) {
         treesWithFruits = cleanTreesWithFruits(betterTreePosition, treesWithFruits);
 
         const nextAction: string = findNextAction(troll, betterTreePosition, shackPosition);
-        // const NextMove: string = troll.nextMove(nextAction, betterTreePosition.x, betterTreePosition.y, shackPosition.x, shackPosition.y);
         trollsAction.push(nextAction);
     }
 
