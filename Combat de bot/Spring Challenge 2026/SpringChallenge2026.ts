@@ -50,9 +50,18 @@ class Troll {
         }
     }
 
+    public getcarryCapacity(): number {
+        return this.carryCapacity;
+    }
+
+    public getCarryLemon(): number {
+        return this.carryLemon;
+    }
+
     public isTrollCanStillCarry(): boolean {
         let isTrollCanCarry: boolean = true;
-        if (this.carryCapacity === this.carryPlum || this.carryCapacity === this.carryLemon || this.carryCapacity === this.carryApple || this.carryCapacity === this.carryBanana || this.carryCapacity === this.carryIron || this.carryCapacity === this.carryWood) {
+        let totalTrollActuallyCarry: number = (this.carryPlum + this.carryLemon + this.carryApple + this.carryBanana + this.carryIron + this.carryWood);
+        if (this.carryCapacity <= totalTrollActuallyCarry) {
             isTrollCanCarry = false;
         }
         return isTrollCanCarry;
@@ -210,6 +219,8 @@ while (true) {
     const action: string = trollsAction.join("; ");
     const train: string = isTrollToTrain(myTrolls);
 
+    
+
     console.log(action + ";" + train);
 }
 
@@ -266,10 +277,43 @@ function computeDistanceTrollTree(trollPosition: Position, treePosition: Positio
 
 function isTrollToTrain(myTrolls: Troll[]): string {
     if (myTrolls.length === 1) {
-        return " TRAIN" + " " + 1 + " " + 1 + " " + 1 + " " + 0;
+        return " TRAIN" + " " + 1 + " " + 2 + " " + 1 + " " + 0;
     }
     return "";
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function initial(trolls: Troll[], trees: Tree[], pantry: Pantry[]) {
     for (let i = 0; i < 2; i++) {
