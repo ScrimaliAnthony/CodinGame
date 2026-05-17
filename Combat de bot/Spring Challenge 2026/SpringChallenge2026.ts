@@ -108,6 +108,27 @@ class GameMap {
             y: i
         }
     }
+
+    public getMyShackOutline(): Position[] {
+        return [
+            {
+                x: this.getMyShack().x + 1,
+                y: this.getMyShack().y
+            },
+            {
+                x: this.getMyShack().x - 1,
+                y: this.getMyShack().y
+            },
+            {
+                x: this.getMyShack().x,
+                y: this.getMyShack().y + 1
+            },
+            {
+                x: this.getMyShack().x,
+                y: this.getMyShack().y - 1
+            }
+        ]
+    }
 }
 
 class Pantry {
@@ -144,6 +165,9 @@ for (let i = 0; i < height; i++) {
 
 const gameMap = new GameMap(width, height, lineArray);
 const shackPosition: Position = gameMap.getMyShack();
+const shackOutline: Position[] = gameMap.getMyShackOutline();
+
+console.error(gameMap.getMyShackOutline());
 
 while (true) {
     const trolls: Troll[] = [];
