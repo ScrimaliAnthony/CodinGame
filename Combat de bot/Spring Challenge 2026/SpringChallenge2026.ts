@@ -66,26 +66,6 @@ class Troll {
         }
         return isTrollCanCarry;
     }
-    
-    public nextMove(action: string, betterTreePositionX: number, betterTreePositionY: number, shackPositionX: number, shackPositionY: number): string {
-        let actionToReturn: string = "";
-        switch (action) {
-            case "MOVETOTREE":
-                actionToReturn = "MOVE" + " " + this.id + " " + betterTreePositionX + " " + betterTreePositionY;
-                break;
-            case "HARVEST":
-                actionToReturn = action + " " + this.id;
-                break;
-            case "MOVETOSHACK":
-                actionToReturn = "MOVE" + " " + this.id + " " + shackPositionX + " " + shackPositionY;
-                break;
-            case "DROP":
-                actionToReturn = action + " " + this.id;
-                break;
-        }
-
-        return actionToReturn;
-    }
 }
 
 class Tree {
@@ -195,6 +175,7 @@ for (let i = 0; i < height; i++) {
 }
 
 const gameMap = new GameMap(width, height, lineArray);
+const shackPosition: Position = gameMap.getMyShack();
 
 while (true) {
     const trolls: Troll[] = [];
@@ -205,22 +186,20 @@ while (true) {
 
     const myTrolls: Troll[] = trolls.filter(troll => troll.getPlayer() === 0);
     let treesWithFruits: Tree[] = trees.filter(tree => tree.isTreeHaveFruit());
-    const shackPosition: Position = gameMap.getMyShack();
 
     const trollsAction: string[] = [];
 
     for (const troll of myTrolls) {
         let betterTreePosition: Position = findBetterTreePosition(troll, treesWithFruits);
         treesWithFruits = cleanTreesWithFruits(betterTreePosition, treesWithFruits);
+
         const nextAction: string = findNextAction(troll, betterTreePosition, shackPosition);
-        const NextMove: string = troll.nextMove(nextAction, betterTreePosition.x, betterTreePosition.y, shackPosition.x, shackPosition.y);
-        trollsAction.push(NextMove);
+        // const NextMove: string = troll.nextMove(nextAction, betterTreePosition.x, betterTreePosition.y, shackPosition.x, shackPosition.y);
+        trollsAction.push(nextAction);
     }
 
     const action: string = trollsAction.join("; ");
-    const train: string = isTrollToTrain(myTrolls);
-
-    
+    const train: string = isTrollToTrain(myTrolls, pantry[0]);
 
     console.log(action + ";" + train);
 }
@@ -231,18 +210,18 @@ function findNextAction(troll: Troll, betterTreePosition: Position, shackPositio
     if (troll.isTrollCanStillCarry()) {
         if ((betterTreePosition.x === trollPosition.x && betterTreePosition.y === trollPosition.y)) {
             // Ne possède pas assez de ressource, est près d'un arbre avec des fruits, doit récolté
-            nextAction = "HARVEST";
+            nextAction = "HARVEST"+ " " + troll.id;
         } else {
             // Ne possède pas assez de ressource, n'est pas près d'un arbre avec des fruits, doit rejoindre l'arbre avec des fruits le plus proche
-            nextAction = "MOVETOTREE";
+            nextAction = "MOVE" + " " + troll.id + " " + betterTreePosition.x + " " + betterTreePosition.y;
         }
     } else {
         if ((shackPosition.x === (trollPosition.x - 1) && shackPosition.y === trollPosition.y) || (shackPosition.x === (trollPosition.x + 1) && shackPosition.y === trollPosition.y) || (shackPosition.x === trollPosition.x && (shackPosition.y === trollPosition.y - 1)) || (shackPosition.x === trollPosition.x && (shackPosition.y === trollPosition.y + 1))) {
             // possède assez de ressource, est près du shack, doit déposer les fruits
-            nextAction = "DROP"
+            nextAction = "DROP" + " " + troll.id;
         } else {
             // possède assez de ressource, doit rejoindre le Shack
-            nextAction = "MOVETOSHACK";
+            nextAction = "MOVE" + " " + troll.id + " " + shackPosition.x + " " + shackPosition.y;
         }
     }
     
@@ -280,9 +259,9 @@ function computeDistanceTrollTree(trollPosition: Position, treePosition: Positio
     return Math.abs((trollPosition.x - treePosition.x)) + Math.abs((trollPosition.y - treePosition.y));
 }
 
-function isTrollToTrain(myTrolls: Troll[]): string {
-    if (myTrolls.length === 1) {
-        return " TRAIN" + " " + 1 + " " + 2 + " " + 1 + " " + 0;
+function isTrollToTrain(myTrolls: Troll[], pantry: Pantry): string {
+    if (myTrolls.length === 1 && pantry.lemon === 10) {
+        return " TRAIN" + " " + 1 + " " + 3 + " " + 1 + " " + 0;
     }
     return "";
 }
@@ -296,7 +275,7 @@ function initial(trolls: Troll[], trees: Tree[], pantry: Pantry[]) {
         const banana: number = parseInt(inputs[3]);
         const iron: number = parseInt(inputs[4]);
         const wood: number = parseInt(inputs[5]);
-        pantry.push(new Pantry(plum, lemon, apple, banana, iron, wood))
+        pantry.push(new Pantry(plum, lemon, apple, banana, iron, wood));
     }
     
     const treesCount: number = parseInt(readline());
