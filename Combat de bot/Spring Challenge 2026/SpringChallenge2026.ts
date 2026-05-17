@@ -204,13 +204,14 @@ while (true) {
     initial(trolls, trees, pantry)
 
     const myTrolls: Troll[] = trolls.filter(troll => troll.getPlayer() === 0);
-    const treesWithFruits: Tree[] = trees.filter(tree => tree.isTreeHaveFruit());
+    let treesWithFruits: Tree[] = trees.filter(tree => tree.isTreeHaveFruit());
     const shackPosition: Position = gameMap.getMyShack();
 
     const trollsAction: string[] = [];
 
     for (const troll of myTrolls) {
         let betterTreePosition: Position = findBetterTreePosition(troll, treesWithFruits);
+        treesWithFruits = cleanTreesWithFruits(betterTreePosition, treesWithFruits);
         const nextAction: string = findNextAction(troll, betterTreePosition, shackPosition);
         const NextMove: string = troll.nextMove(nextAction, betterTreePosition.x, betterTreePosition.y, shackPosition.x, shackPosition.y);
         trollsAction.push(NextMove);
@@ -271,6 +272,10 @@ function findBetterTreePosition(troll: Troll, treesWithFruits: Tree[]): Position
     return betterTreePosition;
 }
 
+function cleanTreesWithFruits(betterTreePosition: Position, treesWithFruits: Tree[]): Tree[] {
+    return treesWithFruits.filter(treeWithFruits => treeWithFruits.x !== betterTreePosition.x && treeWithFruits.y !== betterTreePosition.y);
+}
+
 function computeDistanceTrollTree(trollPosition: Position, treePosition: Position): number {
     return Math.abs((trollPosition.x - treePosition.x)) + Math.abs((trollPosition.y - treePosition.y));
 }
@@ -281,39 +286,6 @@ function isTrollToTrain(myTrolls: Troll[]): string {
     }
     return "";
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 function initial(trolls: Troll[], trees: Tree[], pantry: Pantry[]) {
     for (let i = 0; i < 2; i++) {
